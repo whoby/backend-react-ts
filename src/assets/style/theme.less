@@ -1,0 +1,55 @@
+
+/*
+ * 主题色选择
+ * 可选项：['blue', 'green', 'black', 'default']
+ */
+
+/* antd default less */
+@import '~antd/dist/antd.less';
+
+/* 根据上面的选项，修改并加载相应的主题 */
+@import './theme/black.less';
+
+/* 框架页面配色 */
+header {
+    background-color: @color-header-bg;
+    h1 {
+        color: @color-logo;
+    }
+    a {
+        color: #fff;
+        text-decoration: none;
+        &:hover,
+        &.is-active  {
+            color: @color-nav-active;
+        }
+    }
+}
+
+aside {
+    background: @color-aside-bg;
+    ul {
+        background: transparent !important;
+    }
+    li.ant-menu-item-selected {
+        background-color: fade(@primary-color, 6%) !important;
+    }
+}
+
+.loginPage {
+    background-color: @color-login-bg !important;
+    label {
+        color: @color-text;
+    }
+}
+
+.ant-btn-add {
+    color: #fff;
+    border-color: @btn-add-bg;
+    background-color: @btn-add-bg;
+    &:hover, &:focus, &:active {
+        color: #fff;
+        border-color: @btn-add-bg;
+        background-color: fade(@btn-add-bg, 80%);
+    }
+}

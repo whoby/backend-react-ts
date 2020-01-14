@@ -1,0 +1,85 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: auto;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Microsoft YaHei', Tahoma;
+    font-size: 14px;
+    color: #333;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+input, textarea, keygen, select, button {
+    font-family: 'Microsoft YaHei', Tahoma;
+    font-size: 12px;
+}
+
+a {
+    color: #409EFF;
+    text-decoration: none;
+    &:hover, &:active {
+        color: #409EFF;
+        text-decoration: none;
+    }
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+/* 布局 */
+.clear:before,
+.clear:after { display: table; content: ''; }
+.clear:after { clear: both; }
+.clear { zoom: 1; }
+.fl { float: left; }
+.fr { float: right; }
+.posir { position: relative; }
+
+/* 显示 */
+.none { display: none; }
+.hide { visibility: hidden; }
+
+/* 字体 */
+.f12 { font-size: 12px; }
+.f14 { font-size: 14px; }
+.f16 { font-size: 16px; }
+.f18 { font-size: 18px; }
+
+/* 距中 */
+.tac { text-align: center; }
+.tar { text-align: right; }
+.tal { text-align: left; }
+
+/* 圆角 */
+.br2 { border-radius: 2px; }
+.br3 { border-radius: 3px; }
+.br4 { border-radius: 4px; }
+.br5 { border-radius: 5px; }
+
+/**
+ * margin/padding 边距
+ * @生成形如.mr5 { marign-right: 5px; }
+ */
+$type-list: m p;
+$type-map: (m: margin, p: padding);
+$pos-list: t r b l;
+$pos-map: (t: top, r: right, b: bottom, l: left);
+
+@each $type in $type-list {
+    @each $pos in $pos-list {
+        @for $i from 1 through 10 {
+            .#{$type}#{$pos}#{$i * 5} { #{map-get($type-map, $type)}-#{map-get($pos-map, $pos)}: $i * 5px; }
+        }
+    }
+}
