@@ -1,0 +1,12 @@
+version: '3'
+services:
+    web:
+        image: nginx
+        container_name: react-ts-backend
+        restart: always
+        ports:
+            - 8080:80
+        volumes:
+            - ./bin:/etc/nginx/conf.d
+            - ./app:/app
+        command: ['nginx', '-g', 'daemon off;']
