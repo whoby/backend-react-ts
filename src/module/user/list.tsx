@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import styled from 'styled-components'
-import ajax from 'libs/ajax'
+import ajax from '@/libs/ajax'
 import { Table } from 'antd'
 
 interface IProps {
-    searchData: Object
+    searchData: Record<string, any>
 }
 
 interface IState {
@@ -15,20 +15,20 @@ interface IState {
 @inject('userStore')
 @observer
 class GridList extends React.Component<IProps, IState> {
-    readonly state = {
+    readonly state: IState = {
         gridData: []
-    } as IState
+    }
 
-    private mounted: boolean = false
+    private mounted = false
 
     componentDidMount() {
         this.mounted = true
     }
 
     // 响应search组件传参
-    componentWillReceiveProps(nextProps: IProps) {
-        if (nextProps.searchData !== this.props.searchData) {
-            this.initGridData(nextProps.searchData)
+    componentDidUpdate(prevProps: IProps) {
+        if (prevProps.searchData !== this.props.searchData) {
+            this.initGridData(this.props.searchData)
         }
     }
 
@@ -36,7 +36,7 @@ class GridList extends React.Component<IProps, IState> {
         this.mounted = false
     }
 
-    initGridData(searchData: Object) {
+    initGridData(searchData: Record<string, any>) {
         const params = {
             ...(searchData || this.props.searchData)
         }
@@ -59,7 +59,7 @@ class GridList extends React.Component<IProps, IState> {
             {
                 title: '用户头像',
                 dataIndex: 'headImg',
-                render: (v: string) => <img src={v} className="headImg" />
+                render: (v: string) => <img className="headImg" src={v} alt="head" />
             },
             {
                 title: '用户昵称',

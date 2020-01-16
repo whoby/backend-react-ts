@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react'
 import { Form, Input, Button } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
 import styled from 'styled-components'
-import { formItemLayout } from 'config/global'
+import { formItemLayout } from '@/config/global'
 // import { ajax, util } from 'libs'
 
 const FormItem = Form.Item
@@ -66,7 +66,7 @@ class Login extends Component<IProps, any> {
     }
 }
 
-export default withRouter(Form.create()(Login))
+export default withRouter(Form.create()(Login) as any)
 
 const Root = styled.div`
     .loginPage {
@@ -89,7 +89,7 @@ const Root = styled.div`
         color: #fff;
         text-align: center;
         font-size: 23px;
-        background: url(${require('assets/img/login-logo.png')}) no-repeat top center;
+        background: url(${require('@/assets/img/login-logo.png')}) no-repeat top center;
     }
     ,
     loginbtn: {

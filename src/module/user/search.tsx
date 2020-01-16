@@ -1,19 +1,19 @@
 import React, { FormEvent } from 'react'
+import { observer, inject } from 'mobx-react'
 import { Form, Row, Col, Input, Button } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
-import { formItemLayout } from 'config/global'
-import renderSelect from 'components/renderSelect.tsx'
-import util from 'libs/util'
-import { observer, inject } from 'mobx-react'
+import { formItemLayout } from '@/config/global'
+import renderSelect from '@/components/renderSelect.tsx'
+import util from '@/libs/util'
 
 const FormItem = Form.Item
 
 interface IProps {
-    onSearchChange(searchData: Object): void
+    onSearchChange(searchData: any): void
 }
 
 interface IState {
-    type: Object
+    type: Record<string, any>
 }
 
 @inject('userStore')
@@ -39,12 +39,10 @@ class Search extends React.Component<any & IProps & FormComponentProps, IState> 
         // eslint-disable-next-line
         event && event.preventDefault()
 
-        this.props.form.validateFields({ force: true }, (err: any, values: Object): void => {
+        this.props.form.validateFields({ force: true }, (err: any, values: Record<string, any>): void => {
             if (!err) {
                 // 去除空值&空格
-                values = util.batchTrim(values)
-                this.props.userStore.setSearchData(values)
-                this.props.onSearchChange(values)
+                this.props.onSearchChange(util.batchTrim(values))
             }
         })
     }
@@ -85,4 +83,4 @@ class Search extends React.Component<any & IProps & FormComponentProps, IState> 
     }
 }
 
-export default Form.create()(Search)
+export default Form.create<any>()(Search)

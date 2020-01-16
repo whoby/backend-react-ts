@@ -3,8 +3,8 @@ import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import { Menu, Icon } from 'antd'
 
-@inject('menuStore') @observer
-
+@inject('menuStore')
+@observer
 class SideMenu extends React.Component<any, any> {
     readonly state: Readonly<any>
 
@@ -23,24 +23,22 @@ class SideMenu extends React.Component<any, any> {
     private stack: any = {
         flag: false,
         openKeys: [],
-        breadNames: [],
+        breadNames: []
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.initMenuData()
     }
 
-    // 根据路由siderbar重新渲染
-    shouldComponentUpdate(nextProps: any) {
-        if (this.props.location.pathname !== nextProps.location.pathname) {
+    componentDidUpdate(prevProps: any) {
+        if (prevProps.location.pathname !== this.props.location.pathname) {
             this.stack = {
                 flag: false,
                 openKeys: [],
-                breadNames: [],
+                breadNames: []
             }
-            this.initMenuData(nextProps.location.pathname)
+            this.initMenuData()
         }
-        return true
     }
 
     // 选中菜单
@@ -76,14 +74,20 @@ class SideMenu extends React.Component<any, any> {
     getChildMenu(item: any) {
         if (item.children && item.children.length) {
             return (
-                <Menu.SubMenu key={item.path} title={<span><Icon type="folder" />{item.title}</span>}>
-                    {
-                        item.children.map((child: any) => this.getChildMenu(child))
+                <Menu.SubMenu
+                    key={item.path}
+                    title={
+                        <span>
+                            <Icon type="folder" />
+                            {item.title}
+                        </span>
                     }
+                >
+                    {item.children.map((child: any) => this.getChildMenu(child))}
                 </Menu.SubMenu>
             )
         }
-        return (!item.hide && <Menu.Item key={item.path.replace(/\/:\w+\??$/, '')}>{item.title}</Menu.Item>)
+        return !item.hide && <Menu.Item key={item.path.replace(/\/:\w+\??$/, '')}>{item.title}</Menu.Item>
     }
 
     // 根据当前路径初始化sidebar菜单数据
@@ -95,7 +99,7 @@ class SideMenu extends React.Component<any, any> {
         const topPath = regResult ? regResult[1] : ''
 
         // 根据当前一级菜单过滤出子级
-        let sideMenu: Array<Object> = []
+        let sideMenu: Array<Record<string, any>> = []
         this.store.menu.some((item: any) => {
             if (item.path === topPath) {
                 this.stack.breadNames.push(item.title)
@@ -104,7 +108,7 @@ class SideMenu extends React.Component<any, any> {
             }
         })
 
-        sideMenu.some((item) => {
+        sideMenu.some(item => {
             if (this.stack.flag) {
                 return true
             }
@@ -123,10 +127,14 @@ class SideMenu extends React.Component<any, any> {
 
     render() {
         return (
-            <Menu openKeys={this.state.openKeys} selectedKeys={this.state.selectedKeys} mode="inline" onClick={this.onMenuClick} onOpenChange={this.onOpenChange}>
-                {
-                    this.state.sideMenu.map((item: any) => this.getChildMenu(item))
-                }
+            <Menu
+                openKeys={this.state.openKeys}
+                selectedKeys={this.state.selectedKeys}
+                mode="inline"
+                onClick={this.onMenuClick}
+                onOpenChange={this.onOpenChange}
+            >
+                {this.state.sideMenu.map((item: any) => this.getChildMenu(item))}
             </Menu>
         )
     }

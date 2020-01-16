@@ -1,39 +1,37 @@
 import * as React from 'react'
-import { LocaleProvider } from 'antd'
+import { ConfigProvider } from 'antd'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
-import Headbar from 'module/common/headbar'
-import Sidebar from 'module/common/sidebar'
-import Breadcrumb from 'module/common/breadcrumb'
 import styled from 'styled-components'
+import Headbar from '@/module/common/headbar'
+import Sidebar from '@/module/common/sidebar'
+import Breadcrumb from '@/module/common/breadcrumb'
 
-const App = (route: any) => {
-    return (
-        <LocaleProvider locale={zhCN}>
-            <Root>
-                <div className="app">
-                    <Headbar />
-                    <div className="content">
-                        {route.location.pathname === '/index' ? (
-                            route.children
-                        ) : (
-                            <div>
-                                <aside className="aside">
-                                    <Sidebar />
-                                </aside>
-                                <div className="main">
-                                    <div className="breadcrumb">
-                                        <Breadcrumb />
-                                    </div>
-                                    <div className="mainContent">{route.children}</div>
+const App = (route: any) => (
+    <ConfigProvider locale={zhCN}>
+        <Root>
+            <div className="app">
+                <Headbar />
+                <div className="content">
+                    {route.location.pathname === '/index' ? (
+                        route.children
+                    ) : (
+                        <div>
+                            <aside className="aside">
+                                <Sidebar />
+                            </aside>
+                            <div className="main">
+                                <div className="breadcrumb">
+                                    <Breadcrumb />
                                 </div>
+                                <div className="mainContent">{route.children}</div>
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
-            </Root>
-        </LocaleProvider>
-    )
-}
+            </div>
+        </Root>
+    </ConfigProvider>
+)
 export default App
 
 const Root = styled.div`

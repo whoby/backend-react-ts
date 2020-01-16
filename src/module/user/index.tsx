@@ -3,7 +3,7 @@ import Search from './search'
 import List from './list'
 
 interface IState {
-    searchData: Object
+    searchData: Record<string, any>
 }
 
 class Index extends React.Component<any, IState> {
@@ -11,22 +11,8 @@ class Index extends React.Component<any, IState> {
         searchData: {}
     }
 
-    private mounted: boolean = false
-
-    componentWillMount() {
-        this.mounted = true
-    }
-
-    componentDidMount() {}
-
-    componentWillUnmount() {
-        this.mounted = false
-    }
-
-    onSearchChange = (data: object): void => {
-        if (this.mounted) {
-            this.setState({ searchData: data })
-        }
+    onSearchChange = (data: any): any => {
+        this.setState({ searchData: data })
     }
 
     render() {

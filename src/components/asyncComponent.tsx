@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default function asyncComponent(importComponent: any) {
+export default function asyncComponent(importComponent: any): any {
     class AsyncComponent extends Component<any, any> {
         constructor(props: any) {
             super(props)

@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 @inject('userStore', 'menuStore')
 @observer
-class Headbar extends Component<any & RouteComponentProps, any> {
+class Headbar extends Component<RouteComponentProps & any, any> {
     // 退出
     onLoginOut = (event: MouseEvent<HTMLElement>): void => {
         event.preventDefault()

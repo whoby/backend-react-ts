@@ -1,14 +1,17 @@
 import React from 'react'
+import styled from 'styled-components'
 
 export default () => (
-    <div style={styles.index}></div>
+    <Root>
+        <div className="index"></div>
+    </Root>
 )
 
-const styles = {
-    index: {
-        width: 1100,
-        margin: '100px auto 30px auto',
-        height: 510,
-        background: `url(${require('assets/img/index.jpg')}) no-repeat top center`,
+const Root = styled.div`
+    .index {
+        width: 1100px;
+        margin: 100px auto 30px auto;
+        height: 510px;
+        background: url(${require('@/assets/img/index.jpg')}) no-repeat top center;
     }
-}
+`

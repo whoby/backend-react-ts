@@ -7,26 +7,24 @@ import CryptoJS from './encrypt'
 
 export default {
     // 校验邮箱
-    isEmail(v) {
+    isEmail(v: string): boolean {
         return /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(v)
     },
 
     // 校验url（isFull:完整验证, 默认为true）
-    isUrl(v, isFull) {
+    isUrl(v: string, isFull: boolean): boolean {
         return new RegExp(
-            `^${
-                isFull === false ? '(http[s]?://)?' : 'http[s]?://'
-            }[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-.,:@?^=%&/~+#]*[\\w\\-@?^=%&/~+#])?$`
+            `^${isFull === false ? '(http[s]?://)?' : 'http[s]?://'}[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-.,:@?^=%&/~+#]*[\\w\\-@?^=%&/~+#])?$`
         ).test(v)
     },
 
     // 校验tel
-    isTel(v) {
+    isTel(v: string): boolean {
         return /^1[3-9]\d{9}$/.test(v)
     },
 
     // 批量处理对象属性空格
-    batchTrim(obj, isDel = true) {
+    batchTrim(obj: Record<string, any>, isDel = true): Record<string, any> {
         Object.keys(obj).forEach(key => {
             // 去空格
             if (typeof obj[key] === 'string') {
@@ -41,7 +39,7 @@ export default {
     },
 
     // 带参路由处理（获取纯正的路由）
-    routePath(route) {
+    routePath(route: Record<string, any>): string {
         let { path } = route
 
         Object.keys(route.params).forEach(key => {
@@ -54,8 +52,8 @@ export default {
     },
 
     // 日期格式转换(new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
-    dateFormat(date, fmt) {
-        var o = {
+    dateFormat(date: Date, fmt: string): string {
+        const o: Record<string, any> = {
             'M+': date.getMonth() + 1, // 月份
             'd+': date.getDate(), // 日
             'h+': date.getHours(), // 小时
@@ -68,7 +66,7 @@ export default {
             fmt = fmt.replace(RegExp.$1, `${date.getFullYear()}`.substr(4 - RegExp.$1.length))
         }
 
-        Object.keys(o).forEach(k => {
+        Object.keys(o).forEach((k: string): void => {
             if (new RegExp(`(${k})`).test(fmt)) {
                 fmt = fmt.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : `00${o[k]}`.substr(`${o[k]}`.length))
             }
@@ -78,32 +76,32 @@ export default {
     },
 
     // 格式化日期范围
-    dateRange(range) {
+    dateRange(range: Array<Date>): string[] {
         if (!range.length) {
             return []
         }
 
         return range.map((item, index) => {
-            item = this.dateFormat(item, 'yyyy-MM-dd hh:mm:ss')
+            let ftmDate = this.dateFormat(item, 'yyyy-MM-dd hh:mm:ss')
             if (index === 1) {
-                item = item.replace('00:00:00', '23:59:59')
+                ftmDate = ftmDate.replace('00:00:00', '23:59:59')
             }
-            return item
+            return ftmDate
         })
     },
 
     // 根据当前时间加减天数
-    dateAdd(day) {
+    dateAdd(day: number): any {
         return moment(+new Date() + day * 24 * 60 * 60 * 1000)
     },
 
     // 指定位置插入字符
-    getTextInsert(index, content, insertText) {
+    getTextInsert(index: number, content: string, insertText: string): string {
         return content.slice(0, index) + insertText + content.slice(index, content.length)
     },
 
     // cookie方法
-    cookie(key, value, options) {
+    cookie(key: string, value?: string, options?: any): any {
         let days
         let time
 
@@ -140,7 +138,7 @@ export default {
         // Key and possibly options given, get cookie
         options = value || {}
 
-        const decode = options.raw ? s => s : decodeURIComponent
+        const decode = options.raw ? (s: string) => s : decodeURIComponent
 
         const result = new RegExp(`(?:^|; )${encodeURIComponent(key)}=([^;]*)`).exec(document.cookie)
 
@@ -148,7 +146,7 @@ export default {
     },
 
     // 加密
-    encrypt(pwd) {
+    encrypt(pwd: string): string {
         const aeskey = 'dy5ob2J5QHFxLmNvbQ=='
         const key = CryptoJS.enc.Base64.parse(aeskey)
         const iv = CryptoJS.enc.Base64.parse(aeskey)

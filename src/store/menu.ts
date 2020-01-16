@@ -1,10 +1,10 @@
 import { observable, action } from 'mobx'
-import util from 'libs/util'
+import util from '@/libs/util'
 
 class MenuStore {
-    @observable menu: Object;
-    @observable breadNames: string[];
-    @observable authToken: string;
+    @observable menu: Record<string, any>
+    @observable breadNames: string[]
+    @observable authToken: string
 
     constructor() {
         this.menu = []
@@ -13,17 +13,17 @@ class MenuStore {
     }
 
     @action.bound
-    saveMenu(data: Object) {
+    saveMenu(data: Record<string, any>): void {
         this.menu = data
     }
 
     @action.bound
-    saveBreadNames(data: string[]) {
+    saveBreadNames(data: string[]): void {
         this.breadNames = data
     }
 
     @action.bound
-    saveAuthToken(data: string) {
+    saveAuthToken(data: string): void {
         this.authToken = data
         util.cookie('sso_token', data, { path: '/' })
     }

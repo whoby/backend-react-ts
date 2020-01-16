@@ -1,4 +1,4 @@
-import React, { PureComponent, MouseEvent } from 'react'
+import React, { PureComponent } from 'react'
 import { Modal } from 'antd'
 import styled from 'styled-components'
 
@@ -28,30 +28,31 @@ class PicView extends PureComponent<IProps, IState> {
         }
     }
 
-    componentWillReceiveProps(nextProps: IProps) {
-        if (nextProps.visible !== this.state.visible) {
-            this.setState({
+    static getDerivedStateFromProps(nextProps: IProps, prevState: IState) {
+        if (nextProps.visible !== prevState.visible) {
+            return {
                 list: nextProps.list || [],
                 index: nextProps.index,
                 visible: nextProps.visible
-            })
+            }
         }
+        return null
     }
 
-    handleCancel = (e: MouseEvent<HTMLElement>): void => {
+    handleCancel = (): void => {
         this.setState({
             visible: false
-        });
+        })
     }
 
     // 根据图片重设弹窗的大小
     setModalWidth = (src: string): void => {
-        let img = new Image()
+        const img = new Image()
         img.src = src
 
         img.onload = (e: any): void => {
-            let w = e.target.width + 100
-            let screen = document.body.clientWidth * 0.8
+            const w = e.target.width + 100
+            const screen = document.body.clientWidth * 0.8
             this.setState({
                 width: w > screen ? screen : w
             })
@@ -82,9 +83,25 @@ class PicView extends PureComponent<IProps, IState> {
                     <table className="wrap">
                         <tbody>
                             <tr>
-                                <td><span className={`btn prev ${this.state.index === 0 ? 'disabled' : ''}`} onClick={this.onSwitchPic.bind(this, -1)}>&lt;</span></td>
-                                <td className="pic-wrap"><img src={src} alt="" /></td>
-                                <td><span className={`btn next ${this.state.index === this.state.list.length - 1 ? ' disabled' : ''}`} onClick={this.onSwitchPic.bind(this, 1)}>&gt;</span></td>
+                                <td>
+                                    <span
+                                        className={`btn prev ${this.state.index === 0 ? 'disabled' : ''}`}
+                                        onClick={this.onSwitchPic.bind(this, -1)}
+                                    >
+                                        &lt;
+                                    </span>
+                                </td>
+                                <td className="pic-wrap">
+                                    <img src={src} alt="" />
+                                </td>
+                                <td>
+                                    <span
+                                        className={`btn next ${this.state.index === this.state.list.length - 1 ? ' disabled' : ''}`}
+                                        onClick={this.onSwitchPic.bind(this, 1)}
+                                    >
+                                        &gt;
+                                    </span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
