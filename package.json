@@ -32,7 +32,7 @@
         "@commitlint/cli": "^8.3.5",
         "@commitlint/config-conventional": "^8.3.4",
         "babel-plugin-import": "^1.13.0",
-        "commitizen": "^4.0.3",
+        "commitizen": "^4.3.0",
         "customize-cra": "^0.9.1",
         "http-proxy-middleware": "^0.20.0",
         "husky": "^4.0.10",
